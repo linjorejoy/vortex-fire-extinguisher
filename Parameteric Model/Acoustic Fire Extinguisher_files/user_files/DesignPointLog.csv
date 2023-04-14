@@ -1,0 +1,28 @@
+﻿# 
+# This file contains the parameter values of the Design Points successfully updated by ANSYS Workbench.
+# Project name: Acoustic Fire Extinguisher
+# Creation date: 07/10/2020 14:36:56
+# 
+# 07/10/2020 14:36:56
+# The parameters defined in the project are:
+# ,P1 - Vor_Gen_Radius [mm],P2 - Aperture_Radius [mm]
+# 
+# The following header line defines the name of the columns by reference to the parameters.
+Name,P1,P2
+DP 0,150,30
+# 
+# A non parametric change occurred and invalidated design point results.
+# 07/10/2020 15:48:36
+# 
+# 
+# 07/10/2020 16:13:15
+# Parameters have been added and/or removed. The parameters now defined in the project are:
+# ,P1 - Vor_Gen_Radius [mm],P2 - Aperture_Radius [mm],P5 - Mass Flow Rate eyelet [kg s^-1],P4 - Vortex Flow Rate 1 [kg s^-1],P6 - Vortex Flow Rate 2 [m^2]
+# 
+# The following header line defines the name of the columns by reference to the parameters.
+Name,P1,P2,P5,P4,P6
+DP 1,140,30,-0.0699336,-0.647408,0.000613432
+# 
+# A non parametric change occurred and invalidated design point results.
+# 07/15/2020 10:45:16
+# 

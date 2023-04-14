@@ -1,0 +1,184 @@
+##################################################################
+
+Step 1:	After Extracting
+Open Template_3
+
+##################################################################
+
+Step 2: Open "inlet_motion_11_0.c"
+------------------------------------------------------------------
+#include "udf.h"
+
+DEFINE_PROFILE(unsteady_velocity,thread,position)
+{
+face_t f;
+real t=CURRENT_TIME;
+
+begin_f_loop(f,thread)
+	{
+	F_PROFILE(f,thread,position)=%velo%*sin(30*t);
+	}
+
+end_f_loop(f,thread)
+}
+-----------------------------------------------------------------
+Let	Freq 						= f Hz--------------------(1)
+Let	Stroke 						= x m(Take 0.05m)---------(2)
+So	Max velocity of diaphragm at mean position 	= x.f.pi()
+Substitute this value in place of %velo% in the file "inlet_motion_11_0.c"
+Save this file and close it
+
+##################################################################
+
+
+Step 3: Open "Project 300x60x5.wbpj"
+
+##################################################################
+
+Step 4: Drag the Messages and progress dialogue box if required
+
+
+##################################################################
+
+
+Step 5:Renaming
+-----------------------------------------------------------------
+Rename the System in the format "Project %Dia% x %Freq% x %Stroke%"
+
+
+##################################################################
+
+Step 6: Click save as and save it with name "Project %Dia% x %Freq% x %Stroke%"
+
+
+##################################################################
+
+Step 7:Changing the Dia of diaphragm---------------------------------------------(3)
+-----------------------------------------------------------------
+	Left Click on Geometry
+	Make sure In the properties tab Analysis Type is set to 2D
+
+	Right Click on Geometry
+	Open with DesignModeler
+	Click "SurfaceSk1" From design Tree
+	Click On Sketch1
+	In the details Below change the values of
+	V3 = Dia (in mm)
+	L1 = Dia/2 (in mm)
+	Change other values if required(Preferably Not)
+	And save and Close DesignModeler
+
+##################################################################
+
+Step 8: Updating Mesh
+-----------------------------------------------------------------
+Right Click on Mesh and Click Update 
+
+##################################################################
+
+Step 9:Setup
+-----------------------------------------------------------------
+	Double Click on setup 
+	In dialogue Box 
+		Select Double Precision
+		Select Solver to Parallel
+		In Processes Select n (Number of cores in your CPU)
+		In gpgpus per machine
+		Select 1
+		Click ok
+	Wait under The console in bottom shows 
+		"Preparing mesh for display...
+		 Done."
+	
+
+##################################################################
+Step 10: Setup Parameters - General
+-----------------------------------------------------------------
+	Time - Transient
+
+##################################################################
+
+Step 11: Setup Parameters - Models
+-----------------------------------------------------------------
+	Double Click Viscous - and click k-ephilon
+
+
+##################################################################
+Step 12: Setup Parameters - Materials
+-----------------------------------------------------------------
+Materials-Fluid-Air should be present
+
+
+##################################################################
+
+Step 13: Setup Parameters -Cell Zone COnditions
+-----------------------------------------------------------------
+Cell Zone conditions > Fluid > Fluid_Surface(Double Click) > Make sure material is air
+
+##################################################################
+
+Step 14: Setup Parameters - Boundary Conditions
+-----------------------------------------------------------------
+Inlet
+	Inlet > Inlet(Double Click) > Velo spec > Components
+					> X- Velocity > udf unsteady_velocity
+					> Y- velocity > 0
+		CLick OK
+	Outlet > Make sure outlet is present
+		> Make sure pressure_outlet is present
+	Wall > wall_in_setup should be present
+
+##################################################################
+
+Step 15: Setup Parameters - Initialization
+-----------------------------------------------------------------
+Double Click Initialization 
+	> Standard Initialisation 
+	> Compute from > Inlet 
+	Click Initialize
+
+
+##################################################################
+
+Step 16: Setup Parameters - Boundary Conditions
+-----------------------------------------------------------------
+Double click Run Calculation 
+ 	> Number of timestep > 60/90/120 More is better
+	> Time step size > 1/(freq x resolution)--------------------Take Resolution as 10/15/20(More will give better results)
+	> Time step size > I got 0.002222 after calculation
+	> Max Iteration/time step > 15/20/25 (More is better)
+  Click Calculate and Wait
+
+##################################################################
+
+Step 17: Result - After calculation gets completed
+-----------------------------------------------------------------
+Close Fluent
+In the workbench
+	Double click Results
+		From Top tab > Click Streamline > click ok
+			Domain > fluid_surface
+			Start From > fluid_surface
+			MAx Points > 150-500 > More is better
+			Click apply
+		From top tab click Animations
+			Ckick timestep animation
+			Click save MOvie and provide the location
+			Click play > wait until complete
+		From top tab > click timestep selector
+			click different timestep from menu and apply and select any good timestep with vortex shown
+			Close
+		Position the image appropriatey so that we can save the image
+		From top menu > select save picture > 
+			Set location and name = Use similar format as before for naming
+			Format jpeg
+			Untick "use screen size "
+			Set width and Height > As always more is better (Dont go overboard)
+			set image quality 100%
+			Click save
+		Similarly take various images as you prefer
+		Take animations in various orientations
+##################################################################
+			STEPS OVER 
+##################################################################
+Now Repeat all these steps with different values of freq in Step 2 Eqn(1) , Diameter of diaphragm In step 7 Eqn(3)
